@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>邮件</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/kindeditor/themes/default/default.css"/>
+    <script charset="utf-8" src="../static/kindeditor/kindeditor-all.js"></script>
+    <script charset="utf-8" src="../static/kindeditor/lang/zh-CN.js"></script>
+    <script type="text/javascript">
+        var editor;
+        KindEditor.ready(function (K) {
+            editor = K.create('textarea[name="content"]', {
+                //是否允许浏览服务器已上传文件,默认是false
+                allowFileManager: true,
+                uploadJson :"/sell/speech/uploadFile"
+            });
+        });
+    </script>
+
+    <script th:src="@{/mute/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/mute/js/semantic.min.js}"></script>
+</head>
+<style>
+    body{
+        background-color: #DADADA;
+    }
+
+    .pusher{
+        width: 83.5%;
+    }
+    .header{
+        background-color: aliceblue;
+    }
+</style>
+<body>
+<div class="ui sticky" style="width: 272px !important; height: 261.925px !important; left: 82.6px;position: fixed">
+    <div class="ui teal visible  inverted left vertical fixed sidebar menu">
+        <a th:href="@{/toMain}" class="item">
+            <i class="home icon"></i>
+            主页
+        </a>
+        <a  th:href="@{/report/toReport}" class="item">
+            <i class="keyboard icon"></i>
+            员工汇报
+        </a>
+        <a th:href="@{/report/toCheck}" class="item">
+            <i class="folder open icon"></i>
+            查看员工汇报
+        </a>
+        <a  th:href="@{/emp/emps}" class="item">
+            <i class="users icon"></i>
+            员工管理
+        </a>
+        <a th:href="@{/checkInfo}" class="item">
+            <i class="male icon"></i>
+            个人信息
+        </a>
+        <a   class="item">
+            <i class="envelope square icon"></i>
+            邮件发送
+        </a>
+        <a  th:href="@{/upload/toupload}" class="item">
+            <i class="paper plane outline icon"></i>
+            文件上传下载
+        </a>
+        <a  th:href="@{/uploadRecord}" class="item">
+            <i class="file alternate outline icon"></i>
+            文件上传下载记录
+        </a>
+        <a th:href="@{/about}" class="item">
+            <i class="user circle icon"></i>
+            关于我们
+        </a>
+        <a onclick="exit()" class="item" th:href="@{/out}">
+            <i class="address card icon"></i> 退出
+        </a>
+    </div>
+</div>
+<div class="ui bottom attached segment pushable">
+    <div class="ui teal visible inverted left vertical sidebar menu">
+        <a class="item">
+            <i th:href="@{/toMain}" class=" left home icon"></i>
+            主页
+        </a>
+        <a  th:href="@{/report/toReport}" class="item">
+            <i class="keyboard icon"></i>
+            员工汇报
+        </a>
+        <a th:href="@{/report/toCheck}" class="item">
+            <i class="folder open icon"></i>
+            查看员工汇报
+        </a>
+        <a th:href="@{/emp/emps}" class="item">
+            <i class="users icon"></i>
+            员工管理
+        </a>
+        <a   class="item">
+            <i class="envelope square icon"></i>
+            邮件发送
+        </a>
+        <a  th:href="@{/upload/toupload}" class="item">
+            <i class="paper plane outline icon"></i>
+            文件上传下载
+        </a>
+        <a th:href="@{/about}" class="item">
+            <i class="user circle icon"></i>
+            关于我们
+        </a>
+    </div>
+    <div class="pusher">
+        <div class="ui basic segment">
+            <h2 class="ui header">邮件发送</h2>
+            <h3 class="ui header">简单邮件发送</h3>
+            <form class="ui large form" th:action="@{/mail/sendSimpleMail}"  method="post">
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class=" user icon">
+                            </i>
+                            <input type="email" name="sendName" placeholder="发件人邮箱" maxlength="17" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user outline icon">
+                            </i>
+                            <input type="email" name="acceptName" placeholder="收件人邮箱" maxlength="17" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class=" edit outline icon">
+                            </i>
+                            <input type="text" name="Subject" placeholder="邮件主题" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label style="font-size:large">邮件内容:</label>
+                        <textarea  name="content" type="text" class="form-control" value="${(productInfo.productName)!''}">
+     </textarea>
+                    </div>
+                    <div class="field">
+                        <input type="submit" class="ui fluid large teal submit button" value="发送"/>
+                    </div>
+                </div>
+            </form>
+            <div  class="ui success message">
+                <i class="close icon"></i>
+                <div class="header">
+                    <h4 th:text="${msg2}" style="color: green"></h4>
+                </div>
+            </div>
+            <div class="ui negative message">
+                <i class="close icon"></i>
+                <div class="header">
+                    <h4 th:text="${msg1}" style="color: red"></h4>
+                </div>
+            </div>
+            <h3 class="ui header">复杂邮件发送</h3>
+            <form class="ui large form" th:action="@{/mail/sendComplicatedMail}" enctype="multipart/form-data" method="post">
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class=" user icon">
+                            </i>
+                            <input type="email" name="sendName" placeholder="发件人邮箱" maxlength="17" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user outline icon">
+                            </i>
+                            <input type="email" name="acceptName" placeholder="收件人邮箱" maxlength="17" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class=" edit outline icon">
+                            </i>
+                            <input type="text" name="Subject" placeholder="邮件主题" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label style="font-size: large">邮件内容:</label>
+                        <textarea  name="content" type="text" class="form-control" value="${(productInfo.productName)!''}">
+     </textarea>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="archive icon">
+                            </i>
+                            <input type="file" name="file" placeholder="发送附件">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="submit" class="ui fluid large teal submit button" value="发送"/>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function exit() {
+        if (!confirm("确认要退出？")) {
+            window.event.returnValue = false;
+        }
+    }
+</script>
+</body>
+</html>

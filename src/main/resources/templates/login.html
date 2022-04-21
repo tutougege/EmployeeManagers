@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <!--semantic-ui-->
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+   <!-- 图标不能正常使用 <link rel="stylesheet" type="text/css" href="../static/mute/js/semantic.css">-->
+    <script th:src="@{/mute/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/mute/js/semantic.min.js}"></script>
+    <script th:src= "@{/static/mute/js/md5.js}"></script>
+</head>
+<style type="text/css">
+    body{
+        background-image: url("../static/mute/images/imagewall/background3.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    body>.grid{
+        height: 100%;
+    }
+    .image{
+        margin-top: -100px;
+    }
+    .column{
+        max-width: 450px;
+        margin-top: 200px;
+    }
+
+</style>
+<body>
+<div class="ui small aligned center aligned grid">
+    <div class="column">
+
+            <h4 th:text="${msg}" style="color: red"></h4>
+
+        <h2 class="ui teal image header">
+            <img th:src="@{/static/mute/images/imagewall/logo2.jpg}" class="image">
+            <div class="content">
+                登录到系统
+            </div>
+        </h2>
+        <form class="ui large form" th:action="@{/login}" method="get" onsubmit="return md5()">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon">
+                        </i>
+                        <input type="text" name="empID" placeholder="用户ID" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon">
+                        </i>
+                        <input type="password" id="inpwd"  placeholder="密码" required/>
+                        <input type="hidden" id="md5-Password" name="empPassword"/>
+                    </div>
+                </div>
+                <input type="submit" class="ui fluid large teal submit button" value="登录"/>
+            </div>
+            <div clas="ui error message"></div>
+        </form>
+        <div class="ui message">
+            新用户？
+            <a th:href="@{/toregister}">注册</a>
+        </div>
+    </div>
+</div>
+<script>
+  function md5() {
+      var pwd=document.getElementById("inpwd");
+      var md5pwd=document.getElementById("md5-Password");
+      md5pwd.value=hex_md5(pwd.value);
+      return true;
+  }
+</script>
+</body>
+</html>

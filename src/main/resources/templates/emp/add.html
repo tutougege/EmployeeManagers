@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <script th:src="@{/mute/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/mute/js/semantic.min.js}"></script>
+    <script th:src="@{/static/mute/js/md5.js}"></script>
+</head>
+<style>
+    body{
+        background-color: #DADADA;
+    }
+
+    .pusher{
+        width: 83.5%;
+    }
+    .header{
+        background-color: aliceblue;
+    }
+    .height{
+        height: 14px;
+    }
+    .dept{
+        height: 20px;
+        width:8%;
+    }
+</style>
+<body>
+<div class="ui teal visible inverted left vertical sidebar menu">
+    <a th:href="@{/toMain}" class="item">
+        <i   class="home icon"></i>
+        主页
+    </a>
+    <a  th:href="@{/report/toReport}" class="item">
+        <i class=" left keyboard icon"></i>
+        员工汇报
+    </a>
+    <a th:href="@{/report/toCheck}" class="item">
+        <i class="left folder open icon"></i>
+        查看员工汇报
+    </a>
+    <a th:href="@{/emp/emps}" class="item">
+        <i class="left users icon"></i>
+        员工管理
+    </a>
+    <a th:href="@{/checkInfo}" class="item">
+        <i class="male icon"></i>
+        个人信息
+    </a>
+    <a  th:href="@{/mail/toMail}" class="item">
+        <i class="left envelope square icon"></i>
+        邮件发送
+    </a>
+    <a  th:href="@{/upload/toupload}" class="item">
+        <i class="paper plane outline icon"></i>
+        文件上传下载
+    </a>
+    <a  th:href="@{/uploadRecord}" class="item">
+        <i class="file alternate outline icon"></i>
+        文件上传下载记录
+    </a>
+    <a th:href="@{/about}" class="item">
+        <i class="left user circle icon"></i>
+        关于我们
+    </a>
+    <a onclick="exit()" class="item" th:href="@{/out}">
+        <i class="address card icon"></i> 退出
+    </a>
+</div>
+<div class="pusher">
+    <div class="ui basic segment">
+        <h2 class="ui header">添加员工</h2>
+        <a th:href="@{/emp/emps}"><button class="ui labeled icon button">
+            <i class="left chevron icon"></i>
+            返回
+        </button></a>
+        <div class="height"></div>
+        <form class="ui large form" th:action="@{/emp/addEmp}"  method="get" onsubmit="return md55()">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui inline icon input">
+                        <h3>员工姓名：</h3> <i class="street view icon"></i><input  type="text" name="empName" placeholder="员工姓名" maxlength="5" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left in  icon input">
+                        <h3>员工密码：</h3> <i class="unlock alternate icon"></i>
+                        <input  type="password" id="password" placeholder="员工密码" maxlength="16" required>
+                        <input type="hidden" id="md5-password" name="empPassword">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <h3 class="dept">员工部门：</h3>
+                        <select class="ui dropdown"  name="deptID">
+                            <option th:each="dept:${dept}" th:text="${dept.getDname()}" th:value="${dept.getDeptID()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui in icon input">
+                        <h3>员工号码：</h3><i class="phone volume icon"></i><input type="text"  name="empPhone" placeholder="员工号码" maxlength="11" required></input>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui in icon input">
+                        <h3>员工邮箱：</h3><i class="comment alternate outline icon"></i><input type="email"  name="empMail" maxlength="17" placeholder="员工邮箱">
+                    </div>
+                </div>
+                <div class="field">
+                    <input type="submit" class="ui fluid large green submit button" value="添加"/>
+                </div>
+            </div>
+        </form>
+        <div  class="ui success message">
+            <i class="close icon"></i>
+            <div class="header">
+                <h4 th:text="${msg2}" style="color: green"></h4>
+            </div>
+        </div>
+        <div class="ui negative message">
+            <i class="close icon"></i>
+            <div class="header">
+                <h4 th:text="${msg}" style="color: red"></h4>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function md55() {
+        var pwd=document.getElementById("password");
+        var md5pwd=document.getElementById("md5-password");
+        md5pwd.value=hex_md5(pwd.value);
+        return true;
+    }
+    function exit() {
+        if (!confirm("确认要退出？")) {
+            window.event.returnValue = false;
+        }
+    }
+</script>
+</body>
+</html>

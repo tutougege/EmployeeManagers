@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>关于</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <script th:src="@{/mute/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/mute/js/semantic.min.js}"></script>
+</head>
+<style>
+    body{
+        background-color: #DADADA;
+    }
+
+    .pusher{
+        width: 83.5%;
+    }
+    .header{
+        background-color: aliceblue;
+    }
+</style>
+<body>
+<div class="ui bottom attached segment pushable">
+    <div class="ui teal visible inverted left vertical sidebar menu">
+        <a th:href="@{/toMain}" class="item">
+            <i   class="home icon"></i>
+            主页
+        </a>
+        <a  th:href="@{/report/toReport}" class="item">
+            <i class="keyboard icon"></i>
+            员工汇报
+        </a>
+        <a th:href="@{/report/toCheck}" class="item">
+            <i class="folder open icon"></i>
+            查看员工汇报
+        </a>
+        <a th:href="@{/emp/emps}" class="item">
+            <i class="users icon"></i>
+            员工管理
+        </a>
+        <a th:href="@{/checkInfo}" class="item">
+            <i class="male icon"></i>
+            个人信息
+        </a>
+        <a  th:href="@{/mail/toMail}" class="item">
+            <i class="envelope square icon"></i>
+            邮件发送
+        </a>
+        <a  th:href="@{/upload/toupload}" class="item">
+            <i class="paper plane outline icon"></i>
+            文件上传下载
+        </a>
+        <a  th:href="@{/uploadRecord}" class="item">
+            <i class="file alternate outline icon"></i>
+            文件上传下载记录
+        </a>
+        <a  class="item">
+            <i class="user circle icon"></i>
+            关于我们
+        </a>
+        <a  onclick="exit()" class="item" th:href="@{/out}">
+            <i class="address card icon"></i> 退出
+        </a>
+    </div>
+    <div class="pusher">
+        <div class="ui  segment">
+            <div class="ui info message">
+                <i class="close icon"></i>
+                <div class="header">
+                    关于我们
+                </div>
+            </div>
+            <div class="ui info message">
+                <i class="close icon"></i>
+                <div class="header">
+                    如何使用该系统
+                </div>
+                <ol class="list">
+                    <li>注册</li>
+                    <li>登录</li>
+                    <li>操作</li>
+                </ol>
+            </div>
+            <div class="ui info message">
+                <i class="close icon"></i>
+                <div class="header">
+                    系统有哪些功能
+                </div>
+                <ol class="list">
+                    <li>员工汇报功能</li>
+                    <li>查看员工汇报功能</li>
+                    <li>员工管理功能</li>
+                    <li>查看个人信息功能</li>
+                    <li>邮件发送功能</li>
+                    <li>文件上传下载功能</li>
+                    <li>关于我们</li>
+                </ol>
+            </div>
+            <div class="ui info message">
+                <i class="close icon"></i>
+                <div class="header">
+                    系统正在不断完善中
+                </div>
+                <div class="header">
+                   后续即将推出哪些功能
+                </div>
+                <ol class="list">
+                    <li></li>
+                    <li>员工主界面</li>
+                    <li>员工在线聊天功能</li>
+                    <li>员工在线工作功能</li>
+                    <li>员工休闲时间娱乐功能</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function exit() {
+        if (!confirm("确认要退出？")) {
+            window.event.returnValue = false;
+        }
+    }
+</script>
+</body>
+</html>

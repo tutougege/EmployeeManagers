@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <script th:src="@{/mute/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/mute/js/semantic.min.js}"></script>
+    <script th:src= "@{/static/mute/js/md5.js}"></script>
+</head>
+<style>
+    body{
+        background-color: #DADADA;
+    }
+
+    .pusher{
+        width: 83.5%;
+    }
+    .header{
+        background-color: aliceblue;
+    }
+    .logout{
+        float: right;
+        margin-top: -40px;
+        margin-right: 40px;
+    }
+    /* 1. 样式重置 */
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        list-style: none;
+    }
+
+    /* 外层盒子样式,左右箭头和小圆点都要采用绝对定位，所以其父盒子要采用相对定位*/
+    .banners {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 540px;
+
+    }
+    /*滚动区 包裹所有图片的盒子 宽度要足够宽可以放下所有的图片*/
+    .images2 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 700%;
+    }
+    /* 对图片使用浮动 使其排列在一行*/
+    .images2 li{
+        float: left;
+    }
+    /* 图片大小会撑大盒子,设置图片大小 */
+    .banners img {
+        width: 100%;
+        height: 540px;
+    }
+    /*左右箭头相同样式*/
+    .prev,
+    .next {
+        display: none;
+        position: absolute;
+        /* 绝对定位的盒子垂直居中 */
+        top: 50%;
+        margin-top: -15px;
+        width: 20px;
+        height: 30px;
+        background: rgba(0,0,0, .3);
+        text-align: center;
+        line-height: 30px;
+        color: #fff;
+        text-decoration: none;
+    }
+    /*左箭头靠左定位*/
+    .prev {
+        left: 0;
+        /* 设置圆角 */
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+    /*右箭头靠右定位*/
+    .next {
+        right: 0;
+        /* 设置圆角 */
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+    }
+    /* 小圆点外层盒子的样式 */
+    .dots {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        margin-left: -35px;
+        height: 13px;
+        background:rgba(255,255,255, .3);
+        border-radius:7px;
+    }
+    /* 小圆点样式*/
+    .dots li {
+        float: left;
+        width: 8px;
+        height: 8px;
+        background-color: #fff;
+        border-radius: 50%;
+        margin: 3px;
+    }
+    /* 小圆点被点击的样式 */
+    .dots .active {
+        background-color: #ff5000;
+    }
+</style>
+<body>
+<div class="ui sticky" style="width: 272px !important; height: 261.925px !important; left: 82.6px;position: fixed">
+    <div class="ui teal visible  inverted left vertical fixed sidebar menu">
+        <a  class="item">
+            <i class="home icon"></i>
+            主页
+        </a>
+        <a  th:href="@{/report/toReport}" class="item">
+            <i class="keyboard icon"></i>
+            员工汇报
+        </a>
+        <a th:href="@{/report/toCheck}" class="item">
+            <i class="folder open icon"></i>
+            查看员工汇报
+        </a>
+        <a th:href="@{/emp/emps}" class="item">
+            <i class="users icon"></i>
+            员工管理
+        </a>
+        <a th:href="@{/checkInfo}" class="item">
+            <i class="male icon"></i>
+            个人信息
+        </a>
+        <a  th:href="@{/mail/toMail}" class="item">
+            <i class="envelope square icon"></i>
+            邮件发送
+        </a>
+        <a  th:href="@{/upload/toupload}" class="item">
+            <i class="paper plane outline icon"></i>
+            文件上传下载
+        </a>
+        <a  th:href="@{/uploadRecord}" class="item">
+            <i class="file alternate outline icon"></i>
+            文件上传下载记录
+        </a>
+        <a th:href="@{/about}" class="item">
+            <i class="user circle icon"></i>
+            关于我们
+        </a>
+        <a onclick="exit()" class="item" th:href="@{/out}">
+            <i class="address card icon"></i> 退出
+        </a>
+    </div>
+</div>
+<div class="ui bottom attached segment pushable">
+    <div class="ui teal visible inverted left vertical sidebar menu">
+        <a class="item">
+            <i class="home icon"></i>
+            主页
+        </a>
+        <a   class="item">
+            <i class="keyboard icon"></i>
+            员工汇报
+        </a>
+        <a  class="item">
+            <i class="folder open icon"></i>
+            查看员工汇报
+        </a>
+        <a  class="item">
+            <i class="users icon"></i>
+            员工管理
+        </a>
+        <a  class="item">
+            <i class="users icon"></i>
+            个人信息
+        </a>
+        <a   class="item">
+            <i class="envelope square icon"></i>
+            邮件发送
+        </a>
+        <a   class="item">
+            <i class="paper plane outline icon"></i>
+           文件上传下载
+        </a>
+        <a   class="item">
+            <i class="paper plane outline icon"></i>
+            员工文件上传记录
+        </a>
+        <a  class="item">
+            <i class="user circle icon"></i>
+            关于我们
+        </a>
+        <a class="item">
+            <i class="address card icon"></i>退出
+        </a>
+    </div>
+    <div class="pusher">
+        <div class="ui segment">
+            <h2 class="ui orange header">您好，[[${session.LoginUser}]]</h2>
+            <div class="logout">
+            <h3><a onclick="exit()" class="item" th:href="@{/out}">
+                <i class="arrow alternate circle left icon"></i>退出</a></h3>
+            </div>
+        </div>
+        <h2 class="ui  header">员工照片墙</h2>
+            <div class="banners">
+                <ul class="images2">
+                    <!-- 核心滚动区 -->
+                    <li>
+
+                        <a href="#"><img src="../static/mute/images/imagewall/banner_0.jpg" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="../static/mute/images/imagewall/banner_1.jpg" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="../static/mute/images/imagewall/banner_2.jpg" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="../static/mute/images/imagewall/banner_3.jpg" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="../static/mute/images/imagewall/banner_4.jpg" alt=""></a>
+                    </li>
+                </ul>
+                <!-- 左箭头 -->
+                <a href="javascript:;" class="prev"> &lt;</a>
+                <!-- 右箭头 -->
+                <a href="javascript:;" class="next"> &gt;</a>
+                <!-- 小圆点 -->
+                <ul class="dots">
+                    <!-- li 可用js动态生成-->
+                </ul>
+            </div>
+
+        <h2 class="ui  header">员工荣誉</h2>
+        <div class="ui segment">
+            <div class="ui bordered medium rounded images">
+                <img th:src="@{/static/mute/images/imagewall/5.jpg}">
+                <img th:src="@{/static/mute/images/imagewall/6.jpg}">
+                <img th:src="@{/static/mute/images/imagewall/7.jpg}">
+                <img th:src="@{/static/mute/images/imagewall/8.jpg}">
+            </div>
+        </div>
+        <h2 class="ui  header">员工心声</h2>
+        <div class="ui segment">
+            <div class="ui bordered medium rounded images">
+                <img th:src="@{/static/mute/images/imagewall/9.jpg}">
+                <img th:src="@{/static/mute/images/imagewall/10.jpg}">
+                <img th:src="@{/static/mute/images/imagewall/11.jpg}">
+                <img th:src="@{/static/mute/images/imagewall/12.jpg}">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.addEventListener('load', function () {
+        //1. 获取元素
+        var prev = document.querySelector('.prev');
+        var next = document.querySelector('.next');
+        var banners = document.querySelector('.banners')
+
+        //2. 鼠标经过，显示左右按钮
+        banners.addEventListener('mouseenter', function () {
+            prev.style.display = 'block';
+            next.style.display = 'block';
+            clearInterval(timer);
+            timer = null;//清除计时器
+        });
+        //3. 鼠标离开，隐藏左右按钮
+        banners.addEventListener('mouseleave', function () {
+            prev.style.display = 'none';
+            next.style.display = 'none';
+            timer = setInterval(function () {
+                // 轮播图自动切换 相当于点击右箭头
+                next.click();
+            }, 2000);
+        });
+        // 4. 动态生成小圆圈 有几张图片，就生成几个小圆圈
+        var images = document.querySelector('.images2');
+        var dots = document.querySelector('.dots');
+        var banners_width = banners.offsetWidth;
+        for (var i = 0; i < images.children.length; i++) {
+            //创建一个小li
+            var li = document.createElement('li');
+            //记录当前小圆圈的索引号 通过创建自定义属性来做
+            li.setAttribute('index', i);
+            dots.appendChild(li);
+            //5. 小圆圈的排他思想 可以直接在生成小圆圈的同时直接绑定点击事件
+            li.addEventListener('click', function () {ggg
+                for (var i = 0; i < dots.children.length; i++) {
+                    dots.children[i].className = '';
+                }
+                this.className = 'active';
+                // 6. 点击小圆圈，移动图片，本质移动的是ul
+                //ul 的移动距离 就是小圆圈的索引号 * 图片的宽度 注意是负值
+                // 当我们点击了某个小li 就拿到它的index属性
+                var index = this.getAttribute('index');
+                //当我们点击了某个小li 就要把这个小li 的index给num
+                num = index;
+                circle = index;
+                animate(focus, -index * banners_width);
+            })
+        }
+        //把dots 里面的第一个小li设置类名为 active
+        dots.children[0].className = 'active';
+        // 实现滑动到最后一张照片时 可以平滑地过渡到第一张，克隆第一张图片 放在ul最后面，在其后克隆小圆点不会多
+        var first = images.children[0].cloneNode(true);
+        images.appendChild(first);
+
+        // 点击右侧按钮，图片滚动一张
+        var num = 0;
+        //circle 控制小圆圈的播放
+        var circle = 0;
+        next.addEventListener('click', function () {
+            // 如果走到了最后复制的一张图片，此时的ul要快速复原 left值改为零
+            if (num == images.children.length - 1) {
+                images.style.left = 0;
+                num = 0;
+            }
+            num++;
+            animate(images, -num * banners_width);
+            // 8. 点击右侧按钮，小圆圈跟随一起变化
+            circle++;
+            if (circle == dots.children.length) {
+                circle = 0;
+            }
+            circleChange();
+        })
+        //左侧按钮点击事件
+        prev.addEventListener('click', function () {
+            // 如果走到了最后复制的一张图片，此时的ul要快速复原 left值改为零
+            if (num == 0) {
+                num = images.children.length - 1;
+                images.style.left = -num * banners_width + 'px';
+            }
+            num--;
+            animate(images, -num * banners_width)
+            // 8. 点击右侧按钮，小圆圈跟随一起变化
+            circle--;
+            circle = circle < 0 ? dots.children.length - 1 : circle;
+            //调用函数
+            circleChange();
+        })
+        function circleChange() {
+            for (var i = 0; i < dots.children.length; i++) {
+                dots.children[i].className = '';
+            }
+            dots.children[circle].className = 'active';
+        }
+        var timer = setInterval(function () {
+            //手动调用点击事件
+            next.click();
+        }, 4000);
+
+    })
+    function animate(obj, target,callback) {
+        //让元素只有一个定时器在执行，需要清除以前的定时器
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            var step = (target - obj.offsetLeft) / 1;
+            step = step > 0 ? Math.ceil(step) : Math.floor(step);
+            if (obj.offsetLeft == target) {
+                //停止动画 本质是停止定时器
+                clearInterval(obj.timer)
+                //回调函数写到定时器结束位置
+                if(callback) {
+                    callback();
+                }
+
+            }
+            //把每次加1这个步长值改为一个慢慢变小的值
+            obj.style.left = obj.offsetLeft + step + 'px';
+        }, 15);
+    }
+        function exit() {
+        if (!confirm("确认要退出？")) {
+        window.event.returnValue = false;
+    }
+    }
+</script>
+</body>
+</html>

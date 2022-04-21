@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>员工管理页面</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <script th:src="@{/mute/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/mute/js/semantic.min.js}"></script>
+</head>
+<style>
+    body{
+        background-color: #DADADA;
+    }
+
+    .pusher{
+        width: 83.5%;
+    }
+    .header{
+        background-color: aliceblue;
+    }
+
+    #background-pop{
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 40%
+    }
+    #div-pop{
+        background:gainsboro;
+        width:30%;
+        z-index: 1;
+        margin: 12% auto;
+        overflow: auto;
+    }
+    .div-top{
+        width: 100%;
+        height: auto;
+        background-color: #28a3e7;
+        color: #ffffff;
+    }
+    .div-top div{
+        padding: 3px 5px 5px 8px;
+    }
+    span{
+        color: white;
+        margin-bottom: 10px ;
+        margin-left: 20px ;
+        cursor: pointer;
+        float: right;
+    }
+    .div-content{
+        margin-top: 80px;
+        margin-left: 100px;
+        width: auto;
+        height: 200px;
+        overflow: auto;
+    }
+    .div-footer{
+        text-align: center;
+        background-color: darkgray;
+    }
+    #button{
+
+        width: 100px;
+        height: 50px;
+    }
+    h2{
+        color: red;
+    }
+    .action{
+        float: right;
+        width: 400px;
+        border: 1px solid teal;
+        margin-top: 0px;
+    }
+    form{
+        margin-top: -35px;
+    }
+    .height{
+        height: 50px;
+    }
+    span{
+        align-content: center;
+        margin-top: 10px;
+
+    }
+</style>
+<body>
+<!--提取公共部分元素<div th:replace="~{commons/commons::sidebar}"></div>-->
+<div class="ui bottom attached segment pushable">
+    <div class="ui teal visible inverted left vertical sidebar menu">
+        <a th:href="@{/toMain}" class="item">
+            <i  class="home icon"></i>
+            主页
+        </a>
+        <a  th:href="@{/report/toReport}" class="item">
+            <i class="keyboard icon"></i>
+            员工汇报
+        </a>
+        <a th:href="@{/report/toCheck}" class="item">
+            <i class="folder open icon"></i>
+            查看员工汇报
+        </a>
+        <a th:href="@{/emp/emps}" class="item">
+            <i class="users icon"></i>
+            员工管理
+        </a>
+        <a th:href="@{/checkInfo}" class="item">
+            <i class="male icon"></i>
+            个人信息
+        </a>
+        <a  th:href="@{/mail/toMail}" class="item">
+            <i class="envelope square icon"></i>
+            邮件发送
+        </a>
+        <a  th:href="@{/upload/toupload}" class="item">
+            <i class="paper plane outline icon"></i>
+            文件上传下载
+        </a>
+        <a  th:href="@{/uploadRecord}" class="item">
+            <i class="file alternate outline icon"></i>
+            文件上传下载记录
+        </a>
+        <a th:href="@{/about}" class="item">
+            <i class="user circle icon"></i>
+            关于我们
+        </a>
+        <a onclick="exit()" class="item" th:href="@{/out}">
+            <i class="address card icon"></i> 退出
+        </a>
+    </div>
+    <div class="pusher">
+        <div class="ui basic segment">
+            <h2 class="ui header">员工管理</h2>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a th:href="@{/emp/toaddEmp}"><button class="ui inverted teal button">添加员工</button></a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a th:href="@{/emp/emps}"><button class="ui inverted blue button">显示全部员工</button></a>
+            <form th:action="@{/emp/selectEmp}" method="get">
+                <div class="ui action input">
+                    <input type="text"  name="message" placeholder="可以根据员工ID、员工姓名搜索..." required>
+                    <input type="submit" class="ui button" value="搜索"></input>
+                </div>
+            </form>
+            <span  th:text="${msg}" style="color: red;font-weight:900"></span>
+            <div class="height"></div>
+            <table class="ui compact table" border="2">
+                <thead>
+                <tr>
+                    <th>员工ID</th>
+                    <th>员工姓名</th>
+                    <th>员工密码</th>
+                    <th>员工部门</th>
+                    <th>员工号码</th>
+                    <th>员工邮箱</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each=" emps:${list}">
+                    <td style="font-weight: bold;color: red" th:text="${emps.getEmpID()}"></td>
+                    <td style="font-weight: bold" th:text="${emps.getEmpName()}"></td>
+                    <td style="font-weight: bold" th:text="${emps.getEmpPassword()}"></td>
+                    <td style="font-weight: bold" th:text="${emps.getEDepartment().getDname()}"></td>
+                    <td style="font-weight: bold" th:text="${emps.getEmpPhone()}"></td>
+                    <td style="font-weight: bold" th:text="${emps.getEmpMail()}"></td>
+                    <td><a th:href="@{/emp/toupdate/}+${emps.getEmpID()}"><button class="ui positive button" >修改</button></a>
+                        <a onclick="delcfm()" th:href="@{/emp/delEmp/}+${emps.getEmpID()}"><button class=" ui negative button">删除</button></a></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<div id="background-pop">
+    <div id="div-pop">
+        <div class="div-top">
+            <span id="close-button">×</span>
+            <div>删除员工</div>
+        </div>
+        <div class="div-content">
+            <h2>是否删除员工?</h2><br>
+        </div>
+        <button id="button" onclick="sure()">确定</button>
+        <div class="div-footer">
+            www.mute.com
+        </div>
+    </div>
+</div>
+</body>
+<script>
+        function delcfm() {
+        if (!confirm("确认要删除？")) {
+        window.event.returnValue = false;
+    }
+    }
+        function exit() {
+            if (!confirm("确认要退出？")) {
+                window.event.returnValue = false;
+            }
+        }
+</script>
+</html>
+</body>
+</html>

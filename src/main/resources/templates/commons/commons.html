@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <script th:src="@{/mute/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/mute/js/semantic.min.js}"></script>
+
+</head>
+<body>
+<!--侧边栏-->
+    <nav class="ui bottom attached segment pushable" th:fragment="sidebar">
+    <div class="ui visible inverted left vertical sidebar menu">
+        <a class="item">
+            <i class="home icon"></i>
+            主页
+        </a>
+        <a  th:href="@{/toReport}" class="item">
+            <i class="keyboard icon"></i>
+            员工汇报
+        </a>
+        <a th:href="@{/toCheck}" class="item">
+            <i class="folder open icon"></i>
+            查看员工汇报
+        </a>
+        <a th:href="@{/employeeManage}" class="item">
+            <i class="users icon"></i>
+            员工管理
+        </a>
+        <a  th:href="@{/sendMail}" class="item">
+            <i class="envelope square icon"></i>
+            邮件发送
+        </a>
+        <a th:href="@{/about}" class="item">
+            <i class="user circle icon"></i>
+            关于我们
+        </a>
+    </div>
+
+    </nav>
+</body>
+</html>

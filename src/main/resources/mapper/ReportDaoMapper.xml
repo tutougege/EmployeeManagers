@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.practice.dao.ReportDao">
+    <insert id="addReport" parameterType="Report">
+        insert into project.report(reporterID,reporterName,reportName,reportDate,reportFile) values(#{reporterID},#{reporterName},
+        #{reportName},#{reportDate},#{reportFile})
+    </insert>
+    <select id="getReportID" resultType="Report">
+        select reporterID from report where reporterID=#{reporterID}
+    </select>
+    <select id="getAllReport" resultType="Report">
+        select * from report
+    </select>
+    <delete id="delreport" parameterType="int">
+        delete from project.report where reporterID=#{reporterID}
+    </delete>
+    <select id="selectReport"  resultType="Report" parameterType="map">
+        select * from report
+        <where>
+            <if test="reporterID !=null">
+                 reporterID=#{reporterID}
+            </if>
+            <if test="reporterName !=null">
+                and reporterName=#{reporterName}
+            </if>
+        </where>
+    </select>
+</mapper>

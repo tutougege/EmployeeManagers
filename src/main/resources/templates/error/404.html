@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>404</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <!-- 图标不能正常使用 <link rel="stylesheet" type="text/css" href="../static/mute/js/semantic.css">-->
+    <script th:src="@{/mute/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/mute/js/semantic.min.js}"></script>
+    <script th:src= "@{/static/mute/js/md5.js}"></script>
+</head>
+<body>
+<style>
+    .header{
+        margin-top: 30px;
+    }
+</style>
+<div class="ui large negative message">
+    <i class="close icon"></i>
+    <div class="header">
+        404,此页面走丢了
+    </div>
+    </div>
+</body>
+</html>

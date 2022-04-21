@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <!-- 图标不能正常使用 <link rel="stylesheet" type="text/css" href="../static/mute/js/semantic.css">-->
+    <script th:src="@{/mute/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/mute/js/semantic.min.js}"></script>
+    <script th:src= "@{/static/mute/js/md5.js}"></script>
+</head>
+<body>
+<div class="ui segment">
+    <h1><a th:href="@{/tologin}">欢迎来到员工管理系统,请点此登录</a></h1>
+    <img src="../static/mute/images/imagewall/shouye.png">
+</div>
+</body>
+</html>
