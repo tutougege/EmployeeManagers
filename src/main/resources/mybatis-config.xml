@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="jdbc"></transactionManager>
+            <dataSource type="POLLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="uri" value="jdbc://localhost3306:ssm?characterEncoding=utf-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mapper/DepartmentMapper.xml"></mapper>
+        <mapper resource="mapper/EmployeeDaoMapper.xml"></mapper>
+        <mapper resource="mapper/FileRecordMapper.xml"></mapper>
+        <mapper resource="mapper/ReportDaoMapper.xml"></mapper>
+    </mappers>
+</configuration>
