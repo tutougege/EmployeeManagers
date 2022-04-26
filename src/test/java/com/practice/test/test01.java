@@ -13,13 +13,13 @@ import java.util.List;
 public class test01 {
     @Test
     public void testAllEmp() {
-            SqlSession sqlSession = MybatisUtils.getSqlSession();
+//            SqlSession sqlSession = MybatisUtils.getSqlSession();
             //动态代理并用mapper中的sql语句实现对应方法
-            EmployeeDao employeeDao = sqlSession.getMapper(EmployeeDao.class);
-            List<Employee> employees = employeeDao.allEmp();
-            for (Employee e :
-                    employees) {
-                System.out.println(e);
-            }
+        EmployeeDao employeeDao = MybatisUtils.getMapper(EmployeeDao.class);
+        List<Employee> employees = employeeDao.allEmp();
+        for (Employee e :
+                employees) {
+            System.out.println(e);
         }
     }
+}
