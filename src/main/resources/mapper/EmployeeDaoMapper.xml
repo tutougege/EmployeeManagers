@@ -3,20 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.practice.dao.EmployeeDao">
-    <select id="queryEmp" resultType="Employee">
+    <select id="queryEmp" resultMap="EmployeeMap">
         select empID,empPassword from project.emp where empID=#{empID} and empPassword=#{empPassword}
     </select>
-    <select id="queryPhoneMail" resultType="Employee">
+    <select id="queryPhoneMail" resultMap="EmployeeMap">
         select empPhone,empMail from project.emp where empPhone=#{empPhone} or empMail=#{empMail}
     </select>
     <!--查询所有员工-->
-    <resultMap id="EmployeeMap" type="Employee">
+    <resultMap id="EmployeeMap" type="com.practice.pojo.Employee">
         <id property="empID" column="eid"/>
         <result property="empName" column="empName"/>
         <result property="empPassword" column="empPassword"/>
         <result property="empPhone" column="empPhone"/>
         <result property="empMail" column="empMail"/>
-        <association property="eDepartment" javaType="Department">
+        <association property="eDepartment" javaType="com.practice.pojo.Department">
             <id property="deptID" column="did"/>
             <result property="dname" column="dname"/>
         </association>
@@ -25,6 +25,7 @@
        select e.empID as eid,empName,empPassword,empPhone,empMail,d.deptID as did,d.dname as dname
         from dept d,emp e
         where d.deptID = e.deptID
+-- select empID,empName,empPassword,empPhone,empMail,deptID from emp;
     </select>
     <!--
      <resultMap id="EmployeeMap" type="Employee">
@@ -45,28 +46,28 @@
     </select>
     -->
     <!--注册添加员工 -->
-    <insert id="registerEmp" parameterType="Employee">
+    <insert id="registerEmp" parameterType="com.practice.pojo.Employee">
         insert into project.emp(empName,empPassword,empPhone,empMail,deptID)
         values(#{empName},#{empPassword},#{empPhone},#{empMail},#{deptID})
     </insert>
 
-    <select id="getEmpByID" resultType="Employee" parameterType="int">
+    <select id="getEmpByID" resultType="com.practice.pojo.Employee" parameterType="int">
         select * from project.emp where empID=#{empID}
     </select>
-    <update id="updateEmp" parameterType="Employee">
+    <update id="updateEmp" parameterType="com.practice.pojo.Employee">
         update project.emp set empName=#{empName},empPassword=#{empPassword},deptID=#{deptID},empPhone=#{empPhone},empMail=#{empMail} where empID=#{empID}
     </update>
     <delete id="delEmp" parameterType="int">
         delete from project.emp where empID=#{empID}
     </delete>
     <!--搜索员工-->
-    <resultMap id="selectEmployeeMap" type="Employee">
+    <resultMap id="selectEmployeeMap" type="com.practice.pojo.Employee">
         <id property="empID" column="eid"/>
         <result property="empName" column="empName"/>
         <result property="empPassword" column="empPassword"/>
         <result property="empPhone" column="empPhone"/>
         <result property="empMail" column="empMail"/>
-        <association property="eDepartment" javaType="Department">
+        <association property="eDepartment" javaType="com.practice.pojo.Department">
             <id property="deptID" column="did"/>
             <result property="dname" column="dname"/>
         </association>
@@ -87,14 +88,14 @@
             </if>
         </where>
     </select>
-    <select id="queryIDName" resultType="Employee">
+    <select id="queryIDName" resultType="com.practice.pojo.Employee">
         select empID,empName from project.emp where empID=#{reporterID} and empName=#{reporterName}
     </select>
-    <select id="registerEmp2" resultType="Employee">
+    <select id="registerEmp2" resultType="com.practice.pojo.Employee">
         select * from emp where empPhone=#{empPhone}
     </select>
     <!--查询邮箱-->
-    <select id="queryMail" resultType="Employee">
+    <select id="queryMail" resultType="com.practice.pojo.Employee">
         select * from emp where empMail=#{empMail}
     </select>
 </mapper>

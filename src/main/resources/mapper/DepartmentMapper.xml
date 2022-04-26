@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.practice.dao.DepartmentDao">
-    <select id="getAllDept" resultType="Department">
+    <select id="getAllDept" resultType="com.practice.pojo.Department">
         select * from dept
     </select>
 </mapper>
