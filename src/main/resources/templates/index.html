@@ -4,40 +4,31 @@
     <meta charset="UTF-8">
     <title>入口</title>
     <script>
-        function f(x){
-            let num1 = document.querySelector("#num1");
-            let num2 = document.querySelector("#num2");
-            let result = document.querySelector("span")
-            if(isNaN(num1.value)||isNaN(num2.value)){
-               result.innerText = "输入有误"
-               return;
-            }
-            switch (x){
-                case 1:
-                    result.innerText = num1.value*1+num2.value*1
-                    break
-                case 2:
-                    result.innerText = num1.value-num2.value
-                    break
-                case 3:
-                    result.innerText = num1.value*num2.value
-                    break
-                case 4:
-                    result.innerText = num1.value/num2.value
-                    break
-            }
-        }
+function f(){
+    let tr = document.createElement("tr")
+    let td1 = document.createElement("td")
+    let td2 = document.createElement("td")
+    let td3 = document.createElement("td")
+    td1.innerText = l1.value
+    td2.innerText = l2.value
+    td3.innerText = l3.value
+    tr.append(td1,td2,td3)
+    t1.append(tr)
+
+}
     </script>
 </head>
 <body>
-<input type="text" id="num1">
-<input type="text" id="num2">
-</br>
-<input type="button" onclick="f(1)" value="加">
-<input type="button" onclick="f(2)" value="减">
-<input type="button" onclick="f(3)" value="乘">
-<input type="button" onclick="f(4)" value="除">
-</br>
-<span>结果为:</span>
+<input type="text" id="l1" value="姓名">
+<input type="text" id="l2" value="工资">
+<input type="text" id="l3" value="职位">
+<input type="button" name="添加" value="添加" onclick="f()">
+<table id="t1">
+    <tr>
+        <th>姓名</th>
+        <th>工资</th>
+        <th>职位</th>
+    </tr>
+</table>
 </body>
 </html>
